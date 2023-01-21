@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+###
+# See also:
+#   https://old.reddit.com/r/adventofcode/comments/e32v5b/need_help_with_input_download_script_bash/
+
+./b
+
+## go to input page in browser, hit reload, view request's header for the input file to get this
+SESSION_COOKIE="ownerproof-2470996-1669921403-e83aee573ee0"
+
+Y="2022" # year
+D="1"    # day
+DIR="Day${D}"
+if [ -d "${DIR}" ]; then
+    printf "Directory already exists!"
+    exit
+fi
+
+mkdir -p ${DIR}
+cd ${DIR}
+
+curl "https://adventofcode.com/${Y}/day/${D}/input" -H "cookie: session=${SESSION_COOKIE}" -o "input.txt"
+
+cp ../../template/pyproject.toml .
+poetry install
+
+source $(poetry env info -p)/bin/activate
+ln -s $(poetry env info -p)/bin/activate env.sh
+
+cp -r ../../template/.vscode .
+cp ../../template/*.py .
+touch input-example1.txt
+touch input-example2.txt
+code .
