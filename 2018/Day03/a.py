@@ -33,13 +33,14 @@ if testRun == False:
 
 def runPart1(lines):
     # Part 1
-    print("part 1 start")
     results = count_overlapping_inches(lines)
+    print("part 1 start")
     print(results)
   
-def runPart2(lines):
+def runPart2(claimId):
     # Part 2
     print("part 2 start")
+    print(claimId)
 
 def parse_claim(claim):
     # Parse the claim string to extract coordinates and dimensions
@@ -50,6 +51,8 @@ def parse_claim(claim):
     return claim_id, left_edge, top_edge, width, height
 
 def mark_fabric(fabric, claim_id, left_edge, top_edge, width, height):
+    # check if there is overlap
+    overlap=False
     # Mark the fabric claimed by a specific claim ID
     for i in range(left_edge, left_edge + width):
         for j in range(top_edge, top_edge + height):
@@ -57,23 +60,39 @@ def mark_fabric(fabric, claim_id, left_edge, top_edge, width, height):
                 fabric[i][j] = claim_id
             else:
                 fabric[i][j] = -1  # Overlapping claim
+                overlap = True
+    return overlap
 
 def count_overlapping_inches(claims):
     fabric_size = 1000  # Assuming a fabric size of at least 1000 inches on each side
     fabric = [[0 for _ in range(fabric_size)] for _ in range(fabric_size)]
     overlapping_inches = 0
-
+    all_ids = {}
+    overlap_ids = set()
     for claim in claims:
         if len(claim) == 0: 
             continue
         claim_id, left_edge, top_edge, width, height = parse_claim(claim)
-        mark_fabric(fabric, claim_id, left_edge, top_edge, width, height)
+        all_ids[claim_id] = claim
+        is_overlap = mark_fabric(fabric, claim_id, left_edge, top_edge, width, height)
+        if is_overlap:
+            overlap_ids.add(claim_id)
+    leftover_ids = set(all_ids.keys()) - overlap_ids
 
     for i in range(fabric_size):
         for j in range(fabric_size):
             if fabric[i][j] == -1:
                 overlapping_inches += 1
-
+    for id in leftover_ids:
+        # check if there is overlap
+        overlap=False
+        claim_id, left_edge, top_edge, width, height = parse_claim(all_ids[id])
+        # Mark the fabric claimed by a specific claim ID
+        for i in range(left_edge, left_edge + width):
+            for j in range(top_edge, top_edge + height):
+                if fabric[i][j] != claim_id:  # Overlapping claim
+                    overlap_ids.add(claim_id)
+    runPart2(set(all_ids.keys()) - overlap_ids)
     return overlapping_inches
 
 
@@ -98,9 +117,9 @@ def main():
         
         # if not part2:
         runPart1(lines)
-        if part2:
-            getTime()
-            runPart2(lines)
+        # if part2:
+        #     getTime()
+        #     runPart2(lines)
         
         
         
