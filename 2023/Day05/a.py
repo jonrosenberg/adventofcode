@@ -28,10 +28,6 @@ if testRun == False:
 # elif part2:
 #     default_file = f"{dirPath}/test2.txt"
 
-    
-
-
-
 def runPart1(data):
     # Part 1
     print("part 1 start")
@@ -125,7 +121,7 @@ def runPart2(data):
 
     # Find the lowest location number
     lowest_location = min(final_locations)
-    print(lowest_location)
+    print("Lowest location number:", lowest_location)
 
 # Function to create mappings with handling overlapping ranges
 def create_mapping(mapping_data):
@@ -152,28 +148,6 @@ def apply_map_range(source_range, conversion_map):
     
     return result_ranges if result_ranges else [source_range]
 
-def apply_map_optimized(source1_start, source1_length, destination_ranges):
-    final_desination_ranges = set()
-    source1_end = source1_start + source1_length
-    for dest_start, source2_start, length in destination_ranges:
-        source2_end = source2_start + length
-        # Check if overlap (either range is entirely to the left or right of the other)
-        # get overlaping data
-        if not (source1_end < source2_start or source2_end < source1_start):
-            overlap_start = max(source1_start, source2_start)
-            overlap_end = min(source1_end, source2_end)
-            overlap_range.add(tuple(overlap_start, overlap_end)) 
-        
-        overlap_range = conversion_map.get(source_number, source_number) # Return the same number if not found in map
-        # TODO: get non-overlapping ranges
-        # TODO: 
-        # Return the same number if not found in map (dest_range) 
-        
-
-
-    return overlap_range 
-
-
 def main():
     global printing
     if len(sys.argv) < 2:
@@ -197,8 +171,6 @@ def main():
         if part2:
             getTime()
             runPart2(data)
-        
-        
         
 
 def getTime():
