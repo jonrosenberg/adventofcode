@@ -37,24 +37,24 @@ def runPart1(data):
     print("part 1 start")
     almanac = data.split('\n\n')
     seeds = [int(id) for id in almanac[0].split(': ')[1].split(' ')]
-    seed_to_soil = [tuple(int(id) for id in line.split(' ')) for line in almanac[1].split('\n') if line[0].isdigit() ]
-    soil_to_fertilizer = [tuple(int(id) for id in line.split(' ')) for line in almanac[2].split('\n') if line[0].isdigit() ]
-    fertilizer_to_water = [tuple(int(id) for id in line.split(' ')) for line in almanac[3].split('\n') if line[0].isdigit() ]
-    water_to_light = [tuple(int(id) for id in line.split(' ')) for line in almanac[4].split('\n') if line[0].isdigit() ]
-    light_to_temperature = [tuple(int(id) for id in line.split(' ')) for line in almanac[5].split('\n') if line[0].isdigit() ]
-    temperature_to_humidity = [tuple(int(id) for id in line.split(' ')) for line in almanac[6].split('\n') if line[0].isdigit() ]
-    humidity_to_location = [tuple(int(id) for id in line.split(' ')) for line in almanac[7].split('\n') if len(line) != 0 and line[0].isdigit() ]
+    seed_to_soil_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[1].split('\n') if line[0].isdigit() ]
+    soil_to_fertilizer_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[2].split('\n') if line[0].isdigit() ]
+    fertilizer_to_water_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[3].split('\n') if line[0].isdigit() ]
+    water_to_light_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[4].split('\n') if line[0].isdigit() ]
+    light_to_temperature_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[5].split('\n') if line[0].isdigit() ]
+    temperature_to_humidity_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[6].split('\n') if line[0].isdigit() ]
+    humidity_to_location_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[7].split('\n') if len(line) != 0 and line[0].isdigit() ]
     
     # Process each seed through the mappings
     final_locations = []
     for seed in seeds:
-        soil = apply_map(seed, seed_to_soil)
-        fertilizer = apply_map(soil, soil_to_fertilizer)
-        water = apply_map(fertilizer, fertilizer_to_water)
-        light = apply_map(water, water_to_light)
-        temperature = apply_map(light, light_to_temperature)
-        humidity = apply_map(temperature, temperature_to_humidity)
-        location = apply_map(humidity, humidity_to_location)
+        soil = apply_map(seed, seed_to_soil_data)
+        fertilizer = apply_map(soil, soil_to_fertilizer_data)
+        water = apply_map(fertilizer, fertilizer_to_water_data)
+        light = apply_map(water, water_to_light_data)
+        temperature = apply_map(light, light_to_temperature_data)
+        humidity = apply_map(temperature, temperature_to_humidity_data)
+        location = apply_map(humidity, humidity_to_location_data)
         final_locations.append(location)
 
     # Find the lowest location number
@@ -82,70 +82,96 @@ def runPart2(data):
         if i + 1 < len(seeds):
             seed_ranges.append((seeds[i], seeds[i + 1]))
 
-    # Generate all seed numbers from the ranges
-    # all_seeds = []
-    # for start, length in seed_ranges:
-    #     all_seeds.extend(range(start, start + length))
-
-
-    seed_to_soil = [tuple(int(id) for id in line.split(' ')) for line in almanac[1].split('\n') if line[0].isdigit() ]
-    soil_to_fertilizer = [tuple(int(id) for id in line.split(' ')) for line in almanac[2].split('\n') if line[0].isdigit() ]
-    fertilizer_to_water = [tuple(int(id) for id in line.split(' ')) for line in almanac[3].split('\n') if line[0].isdigit() ]
-    water_to_light = [tuple(int(id) for id in line.split(' ')) for line in almanac[4].split('\n') if line[0].isdigit() ]
-    light_to_temperature = [tuple(int(id) for id in line.split(' ')) for line in almanac[5].split('\n') if line[0].isdigit() ]
-    temperature_to_humidity = [tuple(int(id) for id in line.split(' ')) for line in almanac[6].split('\n') if line[0].isdigit() ]
-    humidity_to_location = [tuple(int(id) for id in line.split(' ')) for line in almanac[7].split('\n') if len(line) != 0 and line[0].isdigit() ]
+    seed_to_soil_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[1].split('\n') if line[0].isdigit() ]
+    soil_to_fertilizer_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[2].split('\n') if line[0].isdigit() ]
+    fertilizer_to_water_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[3].split('\n') if line[0].isdigit() ]
+    water_to_light_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[4].split('\n') if line[0].isdigit() ]
+    light_to_temperature_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[5].split('\n') if line[0].isdigit() ]
+    temperature_to_humidity_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[6].split('\n') if line[0].isdigit() ]
+    humidity_to_location_data = [tuple(int(id) for id in line.split(' ')) for line in almanac[7].split('\n') if len(line) != 0 and line[0].isdigit() ]
     
-    # Convert the mappings to dictionaries
-    seed_to_soil_map = create_map(seed_to_soil)
-    soil_to_fertilizer_map = create_map(soil_to_fertilizer)
-    fertilizer_to_water_map = create_map(fertilizer_to_water)
-    water_to_light_map = create_map(water_to_light)
-    light_to_temperature_map = create_map(light_to_temperature)
-    temperature_to_humidity_map = create_map(temperature_to_humidity)
-    humidity_to_location_map = create_map(humidity_to_location)
- 
-    final_locations = []
+    # Create the actual mappings
+    seed_to_soil_map = create_mapping(seed_to_soil_data)
+    soil_to_fertilizer_map = create_mapping(soil_to_fertilizer_data)
+    fertilizer_to_water_map = create_mapping(fertilizer_to_water_data)
+    water_to_light_map = create_mapping(water_to_light_data)
+    light_to_temperature_map = create_mapping(light_to_temperature_data)
+    temperature_to_humidity_map = create_mapping(temperature_to_humidity_data)
+    humidity_to_location_map = create_mapping(humidity_to_location_data)
+    
+    
+    # Process each seed range through the mappings
+    final_locations = set()
+    for seed_start, seed_length in seed_ranges:
+        seed_end = seed_start + seed_length - 1
+        current_ranges = [(seed_start, seed_end)]
 
-        
-    # for seed in all_seeds:
-    # lowest_location = 99999999999999
-    final_locations_ranges = set()
-    for start, length in seed_ranges:
-        soil_range = apply_map_to_range(start, length, seed_to_soil_map)
-        fertilizer_range = apply_map_to_range(soil_range[0], soil_range[1], soil_to_fertilizer_map)
-        water_range = apply_map_to_range(fertilizer_range[0], fertilizer_range[1], fertilizer_to_water_map)
-        light_range = apply_map_to_range(water_range[0], water_range[1], water_to_light_map)
-        temperature_range = apply_map_to_range(light_range[0], light_range[1], light_to_temperature_map)
-        humidity_range = apply_map_to_range(temperature_range[0], temperature_range[1], temperature_to_humidity_map)
-        location_range = apply_map_to_range(humidity_range[0], humidity_range[1], humidity_to_location_map)
-        final_locations_ranges.add(location_range[0])
-        # if location < lowest_location:
-        #         lowest_location = location
+        for mapping in [seed_to_soil_map, 
+                        soil_to_fertilizer_map, 
+                        fertilizer_to_water_map, 
+                        water_to_light_map, 
+                        light_to_temperature_map, 
+                        temperature_to_humidity_map, 
+                        humidity_to_location_map]:  # continue with other mappings
+            new_ranges = []
+            for r in current_ranges:
+                new_ranges.extend(apply_map_range(r, mapping))
+            current_ranges = new_ranges
+
+        for r in current_ranges:
+            final_locations.add(r[0])
+            final_locations.add(r[1])
+            #final_locations.update(range(r[0], r[1] + 1))
 
     # Find the lowest location number
-    # lowest_location = min(final_locations)
-    print("Lowest location number:", lowest_location)
+    lowest_location = min(final_locations)
+    print(lowest_location)
 
-def create_map(mapping_data):
+# Function to create mappings with handling overlapping ranges
+def create_mapping(mapping_data):
     mapping_dict = {}
     for dest_start, source_start, length in mapping_data:
-        for i in range(length):
-            mapping_dict[source_start + i] = dest_start + i
+        source_range = (source_start, source_start + length - 1)
+        dest_range = (dest_start, dest_start + length - 1)
+        mapping_dict[source_range] = dest_range
     return mapping_dict
 
-def apply_map_to_range(start, length, conversion_map):
-    min_val = float('inf')
-    max_val = start + length - 1
+# Function to apply the conversion map using range mappings with overlapping handling
+def apply_map_range(source_range, conversion_map):
+    result_ranges = []
+    source_start, source_end = source_range
 
-    for i in range(start, min(start + 1000, max_val + 1)):  # Limit the range to handle large datasets
-        mapped_value = conversion_map.get(i, i)
-        if mapped_value < min_val:
-            min_val = mapped_value
-    return (min_val, max_val - start + 1)
+    for map_source_range in conversion_map:
+        map_source_start, map_source_end = map_source_range
+        if map_source_end >= source_start and map_source_start <= source_end:
+            overlap_start = max(map_source_start, source_start)
+            overlap_end = min(map_source_end, source_end)
+            offset = overlap_start - map_source_start
+            dest_start, dest_end = conversion_map[map_source_range]
+            result_ranges.append((dest_start + offset, dest_start + offset + (overlap_end - overlap_start)))
+    
+    return result_ranges if result_ranges else [source_range]
 
-def apply_map_optimized(source_number, conversion_map):
-    return conversion_map.get(source_number, source_number)  # Return the same number if not found in map
+def apply_map_optimized(source1_start, source1_length, destination_ranges):
+    final_desination_ranges = set()
+    source1_end = source1_start + source1_length
+    for dest_start, source2_start, length in destination_ranges:
+        source2_end = source2_start + length
+        # Check if overlap (either range is entirely to the left or right of the other)
+        # get overlaping data
+        if not (source1_end < source2_start or source2_end < source1_start):
+            overlap_start = max(source1_start, source2_start)
+            overlap_end = min(source1_end, source2_end)
+            overlap_range.add(tuple(overlap_start, overlap_end)) 
+        
+        overlap_range = conversion_map.get(source_number, source_number) # Return the same number if not found in map
+        # TODO: get non-overlapping ranges
+        # TODO: 
+        # Return the same number if not found in map (dest_range) 
+        
+
+
+    return overlap_range 
 
 
 def main():
