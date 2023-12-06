@@ -28,14 +28,12 @@ if testRun == False:
 # elif part2:
 #     default_file = f"{dirPath}/test2.txt"
 
-    
-
-
 
 def runPart1(lines):
     # Part 1
     print("part 1 start")
-  
+    lines.pop() # remove last '' line in input
+
 def runPart2(lines):
     # Part 2
     print("part 2 start")
@@ -55,7 +53,6 @@ def main():
        sys.exit()
 
     with open(filepath,'r') as file:
-        
         data = file.read() # string
         lines = data.split('\n') # list of strings
         
@@ -63,10 +60,7 @@ def main():
         runPart1(lines)
         if part2:
             getTime()
-            runPart2(lines)
-        
-        
-        
+            runPart2(lines)     
 
 def getTime():
     print("--- %s seconds ---" % (time.time() - start_time))
