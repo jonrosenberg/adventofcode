@@ -28,10 +28,6 @@ if testRun == False:
 # elif part2:
 #     default_file = f"{dirPath}/test2.txt"
 
-    
-
-
-
 def runPart1(lines):
     # Part 1
     print("part 1 start")
@@ -65,12 +61,9 @@ def react_polymer(polymer):
     # Return the length of the remaining polymer
     return len(polymer_list)
 
-
-
 def runPart2(lines):
     # Part 2
     print("part 2 start")
-    # lines.pop() # remove last '' line 
     best_unit, shortest_length = find_best_unit_to_remove(lines[0])
 
     print(f" removing {best_unit}, returns the best result of {shortest_length}")
@@ -107,10 +100,6 @@ def find_best_unit_to_remove(polymer):
     shortest_unit = min(reacted_lengths, key=reacted_lengths.get)
 
     return shortest_unit, reacted_lengths[shortest_unit]
-
-
-
-
 
 def main():
     global printing
